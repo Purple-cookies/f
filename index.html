@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Эко-рейтинг | Эко-Партнёр</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-decoration">
+    <div class="circle-bg circle-1"></div>
+    <div class="circle-bg circle-2"></div>
+    <div class="circle-bg circle-3"></div>
+    <div class="circle-bg circle-4"></div>
+    <div class="circle-bg circle-5"></div>
+    <div class="circle-bg circle-6"></div>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-leaf me-2 text-success"></i>
+            <span class="brand-text">Эко-рейтинг</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#" data-page="register"><i class="fas fa-user-plus me-1"></i> Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page="profile"><i class="fas fa-user-circle me-1"></i> Профиль</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page="rating"><i class="fas fa-trophy me-1"></i> Рейтинг</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page="map"><i class="fas fa-map-marker-alt me-1"></i> Карта</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container main-container">
+    <!-- РЕГИСТРАЦИЯ -->
+    <div id="registerPage" class="page active">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-12">
+                <div class="card auth-card">
+                    <div class="card-body p-4 p-md-5 text-center">
+                        <div class="icon-circle mb-4"><i class="fas fa-seedling fa-3x text-success"></i></div>
+                        <h2 class="card-title mb-2">Добро пожаловать!</h2>
+                        <p class="text-muted mb-4">Присоединяйтесь к экологическому движению</p>
+                        <ul class="nav nav-tabs justify-content-center mb-4" id="authTab">
+                            <li class="nav-item"><button class="nav-link active" id="register-tab-btn"><i class="fas fa-user-plus me-1"></i> Регистрация</button></li>
+                            <li class="nav-item"><button class="nav-link" id="login-tab-btn"><i class="fas fa-sign-in-alt me-1"></i> Вход</button></li>
+                        </ul>
+                        <div id="registerContent">
+                            <div class="mb-3"><div class="input-group"><span class="input-group-text"><i class="fas fa-phone"></i></span><input type="tel" id="regPhone" class="form-control" placeholder="Номер телефона"></div></div>
+                            <div class="mb-3"><div class="input-group"><span class="input-group-text"><i class="fas fa-user"></i></span><input type="text" id="regName" class="form-control" placeholder="Ваше имя (никнейм)"></div></div>
+                            <div class="mb-4"><div class="input-group"><span class="input-group-text"><i class="fas fa-lock"></i></span><input type="password" id="regPassword" class="form-control" placeholder="Пароль"></div></div>
+                            <button id="registerBtn" class="btn btn-gradient w-100"><i class="fas fa-check-circle me-2"></i>Зарегистрироваться</button>
+                        </div>
+                        <div id="loginContent" style="display: none;">
+                            <div class="mb-3"><div class="input-group"><span class="input-group-text"><i class="fas fa-phone"></i></span><input type="tel" id="loginPhone" class="form-control" placeholder="Номер телефона"></div></div>
+                            <div class="mb-4"><div class="input-group"><span class="input-group-text"><i class="fas fa-lock"></i></span><input type="password" id="loginPassword" class="form-control" placeholder="Пароль"></div></div>
+                            <button id="loginBtn" class="btn btn-outline-success w-100"><i class="fas fa-sign-in-alt me-2"></i>Войти</button>
+                            <div class="mt-3"><a href="#" id="forgotPasswordBtn" class="text-muted small"><i class="fas fa-question-circle me-1"></i>Забыли пароль?</a></div>
+                        </div>
+                        <div id="loggedInPanel" style="display: none;">
+                            <div class="user-card">
+                                <div class="user-avatar"><i class="fas fa-user-circle fa-3x text-success"></i></div>
+                                <h5 id="loggedUserName" class="mt-2 mb-1"></h5>
+                                <p class="text-muted small" id="loggedUserPhone"></p>
+                                <div class="d-flex gap-2 justify-content-center mt-2">
+                                    <button id="changeNicknameBtn" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit me-1"></i>Сменить ник</button>
+                                    <button id="logoutBtn" class="btn btn-sm btn-outline-danger"><i class="fas fa-sign-out-alt me-1"></i>Выйти</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="welcomeMessage" style="display: none;">
+                            <div class="welcome-card mt-3"><i class="fas fa-heart fa-2x text-success mb-2"></i><h5 class="text-success">Мы рады что вы присоединились!</h5></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ПРОФИЛЬ -->
+    <div id="profilePage" class="page">
+        <div class="row">
+            <div class="col-lg-4 col-md-5 col-12 mb-4">
+                <div class="card profile-card">
+                    <div class="card-body text-center p-4">
+                        <div class="profile-avatar-container">
+                            <img id="profileAvatar" class="profile-avatar" src="https://ui-avatars.com/api/?background=2e7d32&color=fff&bold=true&size=120" alt="Аватар">
+                            <button id="changeAvatarBtn" class="change-avatar-btn"><i class="fas fa-camera"></i></button>
+                        </div>
+                        <h3 id="profileName" class="mt-3 mb-1"></h3>
+                        <p class="text-muted small" id="profilePhone"></p>
+                        <div class="profile-actions">
+                            <button id="addFriendFromProfileBtn" class="btn btn-outline-success btn-sm flex-grow-1"><i class="fas fa-user-plus me-1"></i>Добавить друга</button>
+                        </div>
+                        <div class="profile-stats mt-3">
+                            <div class="row g-2">
+                                <div class="col-4"><div class="stat-item"><i class="fas fa-weight-hanging text-success"></i><div class="stat-value" id="profileTotalWeight">0</div><div class="stat-label">кг всего</div></div></div>
+                                <div class="col-4"><div class="stat-item"><i class="fas fa-calendar-alt text-primary"></i><div class="stat-value" id="profileDonationsCount">0</div><div class="stat-label">сдач</div></div></div>
+                                <div class="col-4"><div class="stat-item"><i class="fas fa-trophy text-warning"></i><div class="stat-value" id="profileRank">-</div><div class="stat-label">место</div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header bg-transparent border-0 pt-3 px-4"><h5 class="mb-0"><i class="fas fa-users text-success me-2"></i>Мои друзья</h5></div>
+                    <div class="card-body p-3"><div id="friendsList" class="friends-list"><div class="text-muted text-center py-3">У вас пока нет друзей</div></div></div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header bg-transparent border-0 pt-3 px-4"><h5 class="mb-0"><i class="fas fa-envelope text-warning me-2"></i>Заявки в друзья</h5></div>
+                    <div class="card-body p-3"><div id="friendRequestsList" class="friends-list"><div class="text-muted text-center py-3">Нет заявок</div></div></div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7 col-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4"><h5 class="mb-0"><i class="fas fa-chart-line text-success me-2"></i>Статистика по фракциям</h5></div>
+                    <div class="card-body p-4">
+                        <div class="fractions-stats">
+                            <div class="fraction-item"><div class="fraction-icon plastic"><i class="fas fa-recycle"></i></div><div class="fraction-info"><div class="fraction-name">Пластик</div><div class="fraction-bar"><div class="fraction-progress" id="plasticProgress" style="width:0%"></div></div><div class="fraction-weight" id="plasticWeight">0 кг</div></div></div>
+                            <div class="fraction-item"><div class="fraction-icon paper"><i class="fas fa-newspaper"></i></div><div class="fraction-info"><div class="fraction-name">Бумага</div><div class="fraction-bar"><div class="fraction-progress" id="paperProgress" style="width:0%"></div></div><div class="fraction-weight" id="paperWeight">0 кг</div></div></div>
+                            <div class="fraction-item"><div class="fraction-icon metal"><i class="fas fa-cog"></i></div><div class="fraction-info"><div class="fraction-name">Металл</div><div class="fraction-bar"><div class="fraction-progress" id="metalProgress" style="width:0%"></div></div><div class="fraction-weight" id="metalWeight">0 кг</div></div></div>
+                            <div class="fraction-item"><div class="fraction-icon glass"><i class="fas fa-wine-bottle"></i></div><div class="fraction-info"><div class="fraction-name">Стекло</div><div class="fraction-bar"><div class="fraction-progress" id="glassProgress" style="width:0%"></div></div><div class="fraction-weight" id="glassWeight">0 кг</div></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4"><h5 class="mb-0"><i class="fas fa-lightbulb text-warning me-2"></i>Советы по сортировке</h5></div>
+                    <div class="card-body p-4">
+                        <div class="tips-container">
+                            <div class="tip-item"><div class="tip-icon plastic"><i class="fas fa-recycle"></i></div><div class="tip-content"><h6>Пластик</h6><p>Смывайте остатки, сминайте бутылки. Принимаются с маркировкой 1 (PET) и 2 (HDPE).</p></div></div>
+                            <div class="tip-item"><div class="tip-icon paper"><i class="fas fa-newspaper"></i></div><div class="tip-content"><h6>Бумага</h6><p>Удалите скрепки. Глянец и газеты принимаются. Салфетки - нет.</p></div></div>
+                            <div class="tip-item"><div class="tip-icon metal"><i class="fas fa-cog"></i></div><div class="tip-content"><h6>Металл</h6><p>Ополосните банки, можно смять. Алюминий и жесть принимаются.</p></div></div>
+                            <div class="tip-item"><div class="tip-icon glass"><i class="fas fa-wine-bottle"></i></div><div class="tip-content"><h6>Стекло</h6><p>Снимайте крышки. Битая посуда и лампочки НЕ принимаются!</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- РЕЙТИНГ -->
+    <div id="ratingPage" class="page">
+        <div class="row"><div class="col-12"><div class="card rating-card"><div class="card-header bg-transparent border-0 pt-4 px-3 px-md-4"><div class="d-flex justify-content-between align-items-center flex-wrap gap-3"><h3 class="mb-0"><i class="fas fa-trophy text-warning me-2"></i>Рейтинг участников</h3><div class="period-buttons"><button class="period-btn active" data-period="week">Неделя</button><button class="period-btn" data-period="month">Месяц</button><button class="period-btn" data-period="alltime">За всё время</button></div></div></div><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="table-light"><tr><th>#</th><th>Участник</th><th>Общий вес (кг)</th><th class="d-none d-sm-table-cell">Пластик</th><th class="d-none d-sm-table-cell">Бумага</th><th class="d-none d-sm-table-cell">Металл</th><th class="d-none d-sm-table-cell">Стекло</th></tr></thead><tbody id="ratingTableBody"><tr><td colspan="7" class="text-center py-5 text-muted">Загрузка...<\/td></tr></tbody></table></div></div></div></div></div>
+    </div>
+    
+    <!-- КАРТА -->
+    <div id="mapPage" class="page">
+        <div class="row"><div class="col-12"><div class="card"><div class="card-header bg-transparent border-0 pt-4 px-3 px-md-4"><h3 class="mb-0"><i class="fas fa-map-marked-alt text-danger me-2"></i>Пункты приёма вторсырья</h3><p class="text-muted mt-2 mb-0">«Эко-Партнёр» — официальные пункты сбора</p></div><div class="card-body p-0"><div id="interactiveMap" style="height: 400px; width: 100%;"></div></div></div></div></div>
+    </div>
+</div>
+
+<!-- Панель информации о пользователе -->
+<div id="userInfoPanel" class="user-info-panel" style="display: none;">
+    <div class="user-info-panel-content">
+        <div class="panel-header">
+            <h5><i class="fas fa-user-circle me-2 text-success"></i><span id="panelUserName"></span></h5>
+            <button id="closePanelBtn" class="close-panel">&times;</button>
+        </div>
+        <div class="panel-body">
+            <div class="row g-2">
+                <div class="col-6 col-md-3 mb-2"><div class="info-item"><i class="fas fa-clock text-primary"></i><div><small>Последний взнос</small><div class="fw-semibold" id="lastDonationDate">-</div></div></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="info-item"><i class="fas fa-weight-hanging text-success"></i><div><small>Последний вес</small><div class="fw-semibold" id="lastDonationWeight">0 кг</div></div></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="info-item"><i class="fas fa-recycle text-warning"></i><div><small>Фракция</small><div class="fw-semibold" id="lastDonationFraction">-</div></div></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="info-item timer-item"><i class="fas fa-hourglass-half text-danger"></i><div><small>Исчезнет</small><div class="fw-semibold" id="expiryTimer">-</div></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Панель администратора -->
+<div id="adminPanel" class="admin-panel" style="display: none;">
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-crown text-warning me-2"></i>Панель администратора</h5>
+            <button id="closeAdminPanelBtn" class="close-admin-btn">&times;</button>
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-8 col-8"><input type="text" id="adminSearchInput" class="form-control form-control-sm" placeholder="Поиск пользователя по нику..."></div>
+            <div class="col-md-4 col-4"><button id="adminSearchBtn" class="btn btn-info btn-sm w-100"><i class="fas fa-search me-1"></i>Найти</button></div>
+        </div>
+        <div id="searchResults" class="mb-3" style="display: none;">
+            <div class="alert alert-info alert-sm p-2 mb-2">Результаты поиска:</div>
+            <div id="searchResultsList" class="search-results-list"></div>
+            <button id="clearSearchBtn" class="btn btn-secondary btn-sm w-100 mt-2">Очистить поиск</button>
+        </div>
+        <hr class="my-2">
+        <div class="row g-2 mb-2">
+            <div class="col-md-4 col-12"><select id="adminUserSelect" class="form-select form-select-sm"><option value="">Выберите пользователя</option></select></div>
+            <div class="col-md-3 col-6"><select id="adminFractionSelect" class="form-select form-select-sm"><option value="plastic">Пластик</option><option value="paper">Бумага</option><option value="metal">Металл</option><option value="glass">Стекло</option></select></div>
+            <div class="col-md-2 col-4"><input type="number" id="adminWeight" class="form-control form-control-sm" placeholder="Вес (кг)" step="0.1"></div>
+            <div class="col-md-3 col-2"><button id="adminAddWeightBtn" class="btn btn-primary btn-sm w-100"><i class="fas fa-plus"></i></button></div>
+        </div>
+        <div class="row g-2 mb-2">
+            <div class="col-md-5 col-12"><select id="adminWeightHistorySelect" class="form-select form-select-sm"><option value="">Выберите запись</option></select></div>
+            <div class="col-md-3 col-4"><input type="number" id="adminEditWeight" class="form-control form-control-sm" placeholder="Новый вес" step="0.1"></div>
+            <div class="col-md-2 col-4"><button id="adminEditWeightBtn" class="btn btn-warning btn-sm w-100"><i class="fas fa-edit"></i></button></div>
+            <div class="col-md-2 col-4"><button id="adminDeleteWeightBtn" class="btn btn-danger btn-sm w-100"><i class="fas fa-trash"></i></button></div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-6 col-6"><select id="adminBlockUserSelect" class="form-select form-select-sm"><option value="">Заблокировать пользователя</option></select></div>
+            <div class="col-md-6 col-6"><button id="adminBlockBtn" class="btn btn-danger btn-sm w-100"><i class="fas fa-ban me-1"></i>Заблокировать</button></div>
+        </div>
+        <div class="row g-2 mt-2">
+            <div class="col-md-6 col-6"><select id="adminUnblockUserSelect" class="form-select form-select-sm"><option value="">Разблокировать пользователя</option></select></div>
+            <div class="col-md-6 col-6"><button id="adminUnblockBtn" class="btn btn-success btn-sm w-100"><i class="fas fa-check-circle me-1"></i>Разблокировать</button></div>
+        </div>
+        <div id="adminMessage" class="small mt-2"></div>
+    </div>
+</div>
+
+<button id="adminLoginBtn" class="admin-btn"><i class="fas fa-lock me-1"></i> вход для администрации</button>
+
+<!-- Модальные окна -->
+<div id="adminModal" class="admin-modal"><div class="admin-modal-content"><div class="modal-header"><h4><i class="fas fa-shield-alt me-2"></i>Вход в административную панель</h4><span class="close-modal">&times;</span></div><div class="modal-body"><input type="password" id="adminPasswordInput" class="form-control form-control-lg" placeholder="Введите код доступа"><button id="submitAdminPassword" class="btn btn-success w-100 mt-3">Войти</button><p class="text-muted small mt-3 text-center">Демо-код: <strong>905906</strong></p></div></div></div>
+
+<div id="changeNicknameModal" class="admin-modal"><div class="admin-modal-content"><div class="modal-header"><h4><i class="fas fa-edit me-2"></i>Смена никнейма</h4><span class="close-modal-nick">&times;</span></div><div class="modal-body"><input type="text" id="newNicknameInput" class="form-control form-control-lg" placeholder="Новый никнейм"><button id="submitNicknameChange" class="btn btn-success w-100 mt-3">Изменить</button></div></div></div>
+
+<div id="uploadAvatarModal" class="admin-modal"><div class="admin-modal-content"><div class="modal-header" style="background: linear-gradient(135deg, #2e7d32, #43a047);"><h4><i class="fas fa-upload me-2"></i>Загрузить аватар</h4><span class="close-upload-modal">&times;</span></div><div class="modal-body"><input type="file" id="avatarUploadInput" accept="image/jpeg,image/png,image/jpg,image/gif" style="display: none;"><button id="selectFileBtn" class="btn btn-outline-success w-100 mb-3"><i class="fas fa-folder-open me-2"></i>Выбрать файл</button><div id="avatarPreview" style="display: none; text-align: center;"><img id="avatarPreviewImg" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;"><button id="confirmUploadBtn" class="btn btn-success w-100"><i class="fas fa-check me-2"></i>Установить аватар</button></div></div></div></div>
+
+<div id="addFriendModal" class="admin-modal"><div class="admin-modal-content"><div class="modal-header" style="background: linear-gradient(135deg, #ff9800, #fb8c00);"><h4><i class="fas fa-user-plus me-2"></i>Добавить друга</h4><span class="close-friend-modal">&times;</span></div><div class="modal-body"><p class="text-muted text-center mb-3">Введите никнейм пользователя</p><div class="mb-3"><input type="text" id="friendNickname" class="form-control" placeholder="Никнейм друга"></div><button id="searchFriendBtn" class="btn btn-warning w-100 mb-3"><i class="fas fa-search me-2"></i>Найти</button><div id="friendSearchResult" style="display: none;" class="text-center p-3 rounded"></div></div></div></div>
+
+<div id="chatModal" class="admin-modal"><div class="admin-modal-content" style="max-width: 500px;"><div class="modal-header" style="background: linear-gradient(135deg, #2e7d32, #43a047);"><h4><i class="fas fa-comments me-2"></i>Чат с <span id="chatFriendName"></span></h4><span class="close-chat-modal">&times;</span></div><div class="modal-body" style="padding: 0;"><div id="chatMessages" style="height: 350px; overflow-y: auto; padding: 15px; background: #f8f9fa;"><div class="text-muted text-center py-5">Нет сообщений</div></div><div style="padding: 15px; border-top: 1px solid #e8f5e9;"><div class="input-group"><input type="text" id="chatMessageInput" class="form-control" placeholder="Введите сообщение..."><button id="sendMessageBtn" class="btn btn-success"><i class="fas fa-paper-plane"></i></button></div></div></div></div></div>
+
+<div id="forgotPasswordModal" class="admin-modal"><div class="admin-modal-content"><div class="modal-header" style="background: linear-gradient(135deg, #ff9800, #fb8c00);"><h4><i class="fas fa-key me-2"></i>Восстановление пароля</h4><span class="close-forgot-modal">&times;</span></div><div class="modal-body"><p class="text-muted text-center mb-3">Введите номер телефона, и мы покажем ваш пароль</p><input type="tel" id="forgotPhone" class="form-control mb-3" placeholder="Номер телефона"><button id="recoverPasswordBtn" class="btn btn-warning w-100 mb-3"><i class="fas fa-search me-2"></i>Найти пароль</button><div id="recoveryResult" style="display: none;" class="text-center p-3 rounded"></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
